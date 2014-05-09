@@ -1,0 +1,14 @@
+Convey Development Support
+The purpose of this project is to support Convey development on the convey-1 (a Convey HC-2) at Iowa State University. It's original intention is to help students taking CprE 584. It is designed to complement the support given at conveysupport.com and other development tools Convey provides. 
+The file structure should be kept simple: scripts, lib, bin, inc, doc, res, dev, examples
+scripts: scripts to help with convey development. If support files are needed for the script place them in res (resources).
+lib: Library files (.a extension). 
+bin: Binaries. Executable scripts should be in scripts. Compiled executables should be in bin.
+inc: .h files. Should have an associated file in lib.
+doc: Documentation. Have a pdf of the file and the source code in a 
+folder. For example tutorial1.pdf and tutorial1/. Don't include documentation without an editable source eg. Convey Manuals.
+res: Resources. Support files for binaries and scripts. Should be kept small in size. tar and gz files (files should have the .tgz extension).
+dev: Development. Each developer/project should have a folder. Work you want others to use should be in the same structure as this project eg. the folders scripts, lib, bin, inc, doc, res, (dev), examples.
+examples: Example projects. caeFirst and cae_vadd are good examples. Note. I think we should get permission before loading cae_vadd.
+The Convey Development Support project at ISU is a support kit to help you into the strange and confusing world of High-Performance Reconfigurable Computing (HPRC) on Convey.
+

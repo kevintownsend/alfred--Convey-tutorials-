@@ -1,0 +1,57 @@
+#!/bin/bash
+#this script creates a Convey project
+#Author: Kevin Townsend
+
+echo -n "Enter Project Name:"
+read ProjectName
+echo -n "Enter Project Number:"
+read ProjectNumber
+if [ $ProjectNumber -lt 65000 ]
+then
+    let ProjectNumber+=65000
+fi
+ProjectDir="cae$ProjectName"
+mkdir .tmp
+SCRIPT=`readlink -f $0`
+SCRIPTPATH=`dirname $SCRIPT`
+TempTemp=".tmp/caeTempl@te"
+echo $SCRIPTPATH
+mkdir $ProjectDir
+tar -xzf $SCRIPTPATH/res/caeTempl\@te.tgz -C .tmp/
+mv $TempTemp/*.include $ProjectDir
+AppDir="$ProjectDir/app$ProjectName"
+mkdir $ProjectDir/app$ProjectName
+sed "s/Templ\@te/$ProjectName/" $TempTemp/appTempl\@te/run > "$AppDir/run"
+sed "s/Templ\@te/$ProjectName/" $TempTemp/appTempl\@te/runcp > "$AppDir/runcp"
+sed "s/Templ\@te/$ProjectName/" $TempTemp/appTempl\@te/loadcp > "$AppDir/loadcp"
+sed -e "s/Templ\@te/$ProjectName/" -e "s/caeNumber/$ProjectNumber/" $TempTemp/appTempl\@te/Templ\@teApp.cpp > "$AppDir/${ProjectName}App.cpp"
+sed -e "s/Templ\\\@te/$ProjectName/" -e "s/caeNumber/$ProjectNumber/" $TempTemp/appTempl\@te/cpTempl\@te.s > "$AppDir/cp$ProjectName.s"
+sed "s/Templ\@te/$ProjectName/g" $TempTemp/appTempl\@te/Makefile > "$AppDir/Makefile"
+mv $TempTemp/appTempl\@te/gdbregisters $AppDir/gdbregisters
+mv $TempTemp/appTempl\@te/run_simulation $AppDir/run_simulation
+mv $TempTemp/appTempl\@te/simconfig.txt $AppDir/simconfig.txt
+chmod +x $AppDir/run
+chmod +x $AppDir/runcp
+chmod +x $AppDir/loadcp
+
+mkdir $ProjectDir/personalities
+mkdir $ProjectDir/personalities/$ProjectNumber.1.1.1.0
+echo "$ProjectNumber.1.1.1.0,$ProjectName" > $ProjectDir/personalities/customdb
+mv $TempTemp/personalities/caeNumber\.1\.1\.1\.0/ae_fpga.tgz $ProjectDir/personalities/$ProjectNumber\.1\.1\.1\.0/.
+
+mkdir $ProjectDir/phys
+mv $TempTemp/phys/* $ProjectDir/phys/.
+
+mkdir $ProjectDir/sim
+cp $TempTemp/sim/* $ProjectDir/sim/.
+rm $ProjectDir/sim/CaeIsaTempl\@te.cpp
+ProjectHexNumber=$(printf "%x" $ProjectNumber)
+sed -e "s/Templ\@te/$ProjectName/" -e "s/caeNumber/$ProjectHexNumber/" $TempTemp/sim/CaeIsaTempl\@te.cpp > $ProjectDir/sim/CaeIsa$ProjectName.cpp
+
+mkdir $ProjectDir/verilog
+sed "s/Templ\@te/$ProjectName/" $TempTemp/verilog/cae_pers.v > $ProjectDir/verilog/cae_pers.v
+cp $TempTemp/verilog/cae_clock.v $ProjectDir/verilog/.
+cp $TempTemp/verilog/instdec.v $ProjectDir/verilog/.
+
+
+rm -rf .tmp

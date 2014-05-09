@@ -1,0 +1,15 @@
+# To setup environmental variables, run:
+#  source set_env
+
+#Xilinx envs
+source /remote/Xilinx/13.4/settings64.sh 
+export PATH=$PATH:/remote/Modelsim/10.1c/modeltech/linux_x86_64/
+export LM_LICENSE_FILE=1717@io.ece.iastate.edu:27006@io.ece.iastate.edu
+
+#Convey envs
+export PATH=$PATH:/opt/convey/bin:/opt/convey/sbin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/convey/lib
+export CNY_PDK=/opt/convey/pdk
+export CNY_PDK_REV=latest
+export CNY_PDK_HDLSIM=Mentor
+export CNY_PDK_SIMMODE=64

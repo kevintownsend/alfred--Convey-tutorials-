@@ -1,0 +1,36 @@
+initial author: Chad Nelson, chaddington.com
+This was added to have more examples. This is not the main simpleton thread.
+
+This repository contains many projects, each contained in their own directory.  The bash
+commands below show how to run the simpleton project.
+
+First, notice that the makefile of the simpleton project has been modified with:
+  export CNY_PERSONALITY_PATH=../../personalities
+   
+To compile the project and simulator:
+  cd cae_simpleton/src
+  make
+  
+To run on the software simulator:
+  ./run
+  
+To run on the hardware simulator:
+  ./run -vsim
+  
+To run on the coprocessor:
+  ./runcp
+  
+To rebuild the bitfile:
+
+  cd cae_simpleton/phys
+  make
+  make release
+  cd ../../
+  rm ./personalities/65100.1.1.1.0/ae_fpga.tgz
+  cp ./{release directory}/cae_fpga.tgz        ./personalities/65100.1.1.1.0/ae_fpga.tgz
+  rm -rf ./{release directory}
+
+To give cae_simpleton a new personality number or name, the following files would need to be edited:
+/personalities/customdb       (edit name-number pairings)
+/cae_simpleton/src/UserApp.c  (edit name)
+/cae_simpleton/sim/CaeIsa.cpp (edit number)

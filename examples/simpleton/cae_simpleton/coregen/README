@@ -1,0 +1,27 @@
+To include IP from Xilinx ISE's Core Generator, follow these steps.
+
+Step 1) Open ISE:
+
+  ise &
+
+Step 2) Start a new project (Virtex 5 XC5VLX330 FF1760 for HC-1)
+Step 3) Open the Core Generator from ISE (Tools -> Core Generator)
+Step 4) Start a new CoreGen project with the following settings:
+       Part
+          Family: Virtex5
+          Device: xc5vlx330
+          Package: ff1760
+          Speed: -2
+       Generation
+          Simulation Model: Structural
+Step 5) Generate your cores
+Step 6) Locate the ipcore_dir in your ISE project directory
+Step 7) Copy the following file types for each IP core into this folder (coregen)
+
+ .v   - verilog files for simulation
+ .ngc - netlist for the Xilinx build
+ .xco - config file to regenerate the core
+
+You can also add other directories using the following variable in the makefiles:
+
+XILINX_CORE_DIRS += ./other_dir
